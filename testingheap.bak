@@ -1,0 +1,40 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname testingheap) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+(require "heap-support.rkt")
+
+
+(define my-heap (make-hnode 1
+                            (make-hnode 4
+                                        (make-hnode 9 '() '())
+                                        '())
+                            (make-hnode 6
+                                        (make-hnode 11 '() '())
+                                        '())))
+
+(heap-print my-heap number->string)
+                            
+;; Part A
+;; heap-add
+;; Examples:
+(check-expect (heap-add 0 empty <=) (make-hnode 0 empty empty))
+(check-expect (heap-add 2 my-heap <=) (make-hnode 1
+                            (make-hnode 2
+                                        (make-hnode 4
+                                                    (make-hnode 9 '() '()) '())
+                                        '())
+                            (make-hnode 6
+                                        (make-hnode 11 '() '())
+                                        '())))
+
+;; heap-add: (heapof X) X -> (heapof X)
+(define (heap-add el heap comp?)
+  (cond
+    [(empty? heap) (make-hnode el empty empty)]
+    [(comp? el (hnode-key heap))
+     (make-hnode el
+                (heap-add (hnode-key heap) (hnode-right heap) el)
+                (hnode-left heap))] ;; add the key
+    [else (make-hnode (hnode-key heap)
+                      (heap-add el (hnode-right heap) comp?)
+                      (hnode-left heap))]))

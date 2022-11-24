@@ -1,0 +1,66 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname learning-bt-practice) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+(define-struct node (key left right)) ;; legit definition
+
+(define ex-tree (make-node 5
+                           (make-node 1
+                                        (make-node 3 empty empty)
+                                        (make-node 6 empty empty))
+                           (make-node 1
+                                      (make-node 1
+                                                 (make-node 4 empty empty)
+                                                 (make-node 6 empty empty))
+                                      (make-node 3 empty empty))))
+
+
+;; Module: this is supposed to count the nodes in a tree
+(define (count-nodes tree k)
+  (cond
+    [(empty? tree) 0]
+    [(node? tree)
+     (+ (cond [(= k (node-key tree)) 1]
+              [else 0])
+        (count-nodes (node-left tree) k)
+        (count-nodes (node-right tree) k))]))
+
+(check-expect (count-nodes ex-tree 1) 3)
+
+;; Example 1: Count-leaves t
+(define (count-leaves tree)
+  (cond
+    [(empty? tree) 0]
+    [(node? tree)
+     (+ (cond
+          [(and (empty? (node-left tree))
+                (empty? (node-right tree))) 1]
+          [else 0])
+     (count-leaves (node-left tree))
+     (count-leaves (node-right tree)))]))
+(check-expect (count-leaves ex-tree) 5)
+
+;; Example 2: Count-even t
+(define (count-even t)
+  (cond
+    [(empty? t) 0]
+    [(node? t)
+     (+(cond
+         [(= (remainder (node-key t) 2) 0) 1]
+         [else 0])
+     (count-even (node-left t))
+     (count-even (node-right t)))]))
+(check-expect (count-even ex-tree) 3)
+
+;; Example 3: Reverse-tree t
+(define (reverse-tree t)
+  (cond
+    [(empty? t) 0]
+    [(node? t) (make-node (node-key t) 
+               (reverse-tree (node-right t))
+               (reverse-tree (node-left t)))]))
+(reverse-tree ex-tree) ;; passed
+
+     
+
+        
+          

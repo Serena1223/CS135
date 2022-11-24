@@ -1,0 +1,50 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname fizz-buzz-2) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+;;
+;; ***************************************************
+;; Serena Ge (20998413)
+;; CS 135 Fall 2022
+;; Assignment 08, Problem 3
+;; ***************************************************
+;; Part A
+;; make-div-pred takes a positive integer and produce a new function that
+;; determines if m is divisible by n.
+(define (make-div-pred n)
+  (local [(define (f a)
+            (= (remainder a n) 0))]f))
+
+;; Part B
+;; fizz-buzz-2
+
+(define (fizz-buzz-2 start end lst)
+  (local
+    [(define (check-pred n lst)
+       (cond
+         [(empty? lst) n]
+         [((second (first lst)) n) (first (first lst))]
+         [else (check-pred n (rest lst))]))]
+    (cond
+      [(> start end) empty]
+      [else (cons (check-pred start lst) (fizz-buzz-2 (add1 start) end lst))])))
+
+
+                     
+;; Examples:
+(check-expect (fizz-buzz-2 8 15 (list (list 'socks (make-div-pred 15))
+                                      (list 'laundry (make-div-pred 3))
+                                      (list 'lights (make-div-pred 5))))
+              '(8 laundry lights 11 laundry 13 14 socks))
+
+(check-expect (fizz-buzz-2 -5 0 (list (list 'zero zero?)
+                                      (list 'hello string?)
+                                      (list 'even even?)
+                                      (list 'odd odd?)))
+              '(odd even odd even odd zero))
+
+
+
+
+
+
+

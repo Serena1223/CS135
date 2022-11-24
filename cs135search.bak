@@ -1,0 +1,28 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-abbr-reader.ss" "lang")((modname cs135search) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+;;
+;; ***************************************************
+;; Serena Ge (20998413)
+;; CS 135 Fall 2022
+;; Assignment 05, Problem 2
+;; ***************************************************
+;;
+
+(a) Create a function both which consumes two DLs and produces a doc-list (DL) that occur
+in both DLs. For example,
+(both (list "b.txt") (list "b.txt" "c.txt")) should produce (list "b.txt").
+;;
+
+(b) Create a function exclude which consumes two DLs and produces a doc-list (DL) that
+occur in the first DL but not the second one. For example,
+(exclude (list "b.txt" "c.txt") (list "b.txt")) should produce (list "c.txt").
+
+(c) Create a function (keys-retrieve doc an-il) which consumes a Str and an IL and
+produces a (listof Str) with lexicographic ordering. The values in the produced list
+are the keys from an-il whose doc-lists contain doc. If doc is not contained in the
+doc-list associated with any keys in an-il, then keys-retrieve returns empty.
+For example, if we passed "a.txt" and the IL shown at the top of this page to keys-retrieve,
+it would return (list "cat" "sleeps" "the").
+
+

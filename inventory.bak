@@ -1,0 +1,66 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-abbr-reader.ss" "lang")((modname inventory) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+;;
+;; ***************************************************
+;; Serena Ge (20998413)
+;; CS 135 Fall 2022
+;; Assignment 06, Problem 2
+;; ***************************************************
+;;
+
+;; Part A
+;; ev is a structure for type EV.
+(define-struct ev (model year price mileage mpge))
+
+
+;; Part B
+;; (adjust-prices) lowers every element in a list by a fixed percentage
+;; Examples:
+(check-expect (adjust-prices (list (make-ev "Mercedes" 2022 100 1 3)) 0.2)
+                             (list (make-ev "Mercedes" 2022 120 1 3)))
+
+              
+;; adjust-prices: (listof EV) Num -> (listof EV)
+
+;; Part C
+;;(build-inventory) has a list for each parameter similar to a table.
+
+;; Examples:
+(check-expect (build-inventory models years prices mileage mpge)
+              (list (make-ev "Alpha Tauri" 1999 1000 34353 10101)
+                    (make-ev "Mercedes Lewis" 2013 1523524 25 53535)
+                    (make-ev "F1 Car" 2020 53000 34131 231)
+                    (make-ev "Red Bull" 1909 1251251 34153 66342)))
+;; build-inventory: (listof Str) (listof Nat) (listof Num) (listof Num) (listof Num) -> (listof EV)
+
+;; Part D
+;;(compare-ev) compares two EVs based on year, mpge, and mileage.
+
+;; Examples:
+(check-expect (compare-ev (make-ev "My car" 1999 101010 9000 1000)
+                          (make-ev "Oudi e-Tron" 2021 2 100 34343)) 'lt)
+
+;; compare-ev: EV EV -> (anyof 'lt 'eq 'gt)
+
+;; Part e
+;; (sort-evs)
+
+;; Examples:
+(check-expect (sort-evs (list (make-ev "Alpha Tauri" 1999 1000 34353 10101)
+                              (make-ev "Mercedes Lewis" 2013 1523524 25 53535)
+                              (make-ev "F1 Car" 2020 53000 34131 231)
+                              (make-ev "Red Bull" 1909 1251251 34153 66342)))
+                        (list (make-ev "F1 Car" 2020 53000 34131 231)
+                              (make-ev "Mercedes Lewis" 2013 1523524 25 53535)
+                              (make-ev "Alpha Tauri" 1999 1000 34353 10101)
+                              (make-ev "Red Bull" 1909 1251251 34153 66342)))
+
+;; sort-evs: (listof EV) -> (listof EV)
+
+;; 
+
+
+
+              
+              
