@@ -18,6 +18,8 @@
 ;; Examples:
 (check-expect (remove-outliers '(2 8 0 7 10 8 34)) '(2 8 0 7 10 8))
 (check-expect (remove-outliers '(0 0 0 0)) '(0 0 0 0))
+(check-expect (remove-outliers '(-9 0 0 0)) '(-9 0 0 0))
+(check-expect (remove-outliers '()) '())
 
 ;; Part C
 (check-expect (zero-fill "financebro") "financebro0000000000")

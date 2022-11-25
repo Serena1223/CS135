@@ -10,13 +10,11 @@
 
 ;; Part A
 (check-expect (multi-apply (list add1 sub1 add1 add1) 9) 11)
-(check-expect (multi-apply (list sqr sub1) 9) 2)
 (check-expect (multi-apply '() 9) 9)
 
 ;; Part B
 (check-expect ((aop 3) 2) 15)
 (check-expect ((aop 1) 10) 11)
-(check-expect ((aop 7) 0) 7)
 
 
 ;; Part C
