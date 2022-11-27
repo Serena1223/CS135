@@ -1,10 +1,6 @@
 ;; The first three lines of this file were inserted by DrRacket. They record metadata
 ;; about the language level of this file in a form that our tools can easily process.
 #reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname bw-images) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
-;; The first three lines of this file were inserted by DrRacket. They record metadata
-;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname bw-images) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
-;;
 ;; ***************************************************
 ;; Serena Ge (20998413)
 ;; CS 135 Fall 2022
@@ -27,11 +23,11 @@
 ;; Part A
 ;; invert-image takes in a 2D-Image and invert it, that is, 0 becomes 1 and 1 becomes 0
 ;; Examples: 
-(check-expect (invert-image diamond-image)
+(check-expect (invert diamond-image)
               '((1 0 1)
                 (0 1 0)
                 (1 0 1)))
-(check-expect (invert-image asym-image)
+(check-expect (invert asym-image)
               '((1 0 0 1)
                 (1 0 1 1)
                 (1 1 1 1)

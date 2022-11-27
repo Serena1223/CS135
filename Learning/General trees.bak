@@ -1,0 +1,40 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname |General trees|) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+;; learning all of cs 135
+;; general arithmetic expression trees
+
+;; This is for binary trees?
+(define-struct binode (op left right ))
+;; a binary arithmetic expression internal node (BINode)
+;; is a (make-binode (anyof '+ '* '/ '-) BinExp BinExp
+
+;; this is for general trees?
+(define-struct opnode (op args))
+;; an OpNode (operator node) is a
+;; make-opnode (anyof '+ '*) (listof AExp))
+
+
+;; EXAMPLES BEGIN
+(make-opnode '* (list 3 4 5))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
