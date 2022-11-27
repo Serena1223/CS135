@@ -1,0 +1,30 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname |Local Definition|) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+;; M14 Local Definition Learning
+
+;; Direct translation
+(define (t-area-v0 a b c)
+  (sqrt
+   (* (/ (+ a b c) 2)
+      (- (/ (+ a b c) 2) a)
+      (- (/ (+ a b c) 2) b)
+      (- (/ (+ a b c) 2) c))))
+
+;; Trying to make a local def myself
+(define (t-area-v1 a b c)
+  (local [(define s (/ (a b c) 2))]
+    (sqrt (* s (- s a) (- s b) (- s c))))) ;; this is actually right.
+
+;;
+(define x 5)
+(define (fun a)
+  (local [(define x 3)]
+    (+ a x)))
+(fun 4) ;; this will output (+ 4 3) which is 7
+
+
+;; There is a lot more to go
+
+
+
