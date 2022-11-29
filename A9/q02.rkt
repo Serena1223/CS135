@@ -92,9 +92,20 @@
 
 
 ;; Part D
+;; remove-duplicates takes in a list and only keeps the first instance of each element's
+;; occurence and discards repeated occurances thereafter
+
+;; Examples:
 (check-expect (remove-duplicates (list 0 3 0 4 5 1 3 1)) (list 0 3 4 5 1))
 (check-expect (remove-duplicates (list 1 2 3 1 3 1)) (list 1 2 3))
 (check-expect (remove-duplicates empty) empty)
+
+;; remove-duplicates: (listof Num) -> (listof Num)
+
+
+;; Tests:
+
+
 
 
 
