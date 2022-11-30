@@ -32,8 +32,7 @@
     (0 0 1 1)
     (0 1 1 1)))
 
-;; Part A
-;; invert-image takes in a 2D-Image and invert it, that is, 0 becomes 1 and 1 becomes 0
+;; (invert img) takes in a 2D-Image and invert it, that is, 0 becomes 1 and 1 becomes 0
 
 ;; Examples: 
 (check-expect (invert diamond-image)
@@ -49,7 +48,9 @@
 ;; invert: 2D-Image -> 2D-Image
 
 (define (invert img)
-  (local [(define (invert-row row)
+  (local [;; (invert-row) inverts a row of pixels. That is, turn 0s into 1 and vice versa
+          ;; (listof BW-Pixel) -> (listof BW-Pixel)
+          (define (invert-row row)
             (map (lambda (x)
                    (cond [(zero? x) 1]
                          [else 0])) row))]
@@ -63,8 +64,7 @@
     (1 1 0 0)
     (1 1 1 1)))
 
-;; Part B
-;; reflect-x-axis reflects a 2D-image across the x-axis
+;; (reflect-x-axis img) reflects a 2D-image across the x-axis
 
 ;; Examples:
 (check-expect (reflect-x-axis diamond-image)
@@ -98,8 +98,7 @@
 
 (check-expect (reflect-x-axis '((0 0)))  '((0 0)))
 
-;; Part C
-;; reflect-y-axis reflects a 2D-image across the y-axis
+;; (reflect-y-axis img) reflects a 2D-image across the y-axis
 
 ;; Examples: 
 (check-expect (reflect-y-axis diamond-image)
@@ -116,7 +115,9 @@
 ;; reflect-y-axis: 2D-Image -> 2D-Image
 
 (define (reflect-y-axis img)
-  (local [(define (reverse-row row)
+  (local [;; (reverse-row) reverse the elements in a row 
+          ;; (listof BW-Pixel) -> (listof BW-Pixel)
+          (define (reverse-row row)
             (foldl cons empty row))]
     (map reverse-row img)))
 
@@ -137,9 +138,8 @@
 (check-expect (reflect-y-axis '((0) (0)))  '((0) (0)))
 (check-expect (reflect-y-axis '((0) (1)))  '((0) (1)))
 
-
-;; Part D
-;; transpose will transpose the 2D-Image, that is, its rows become colums and its
+ 
+;; (transpose img) will transpose the 2D-Image, that is, its rows become colums and its
 ;; columns become rows
 
 ;; Examples:
@@ -157,8 +157,9 @@
 ;; transpose: 2D-Image -> 2D-Image
 
 (define (transpose img)
-  ;; getting the nth column into a list
-  (local [(define (nth-col lsts n)
+  (local [;; (nth-col) gets the nth column into a list
+          ;; nth-col: 2D-Image -> (listof BW-Pixel)
+          (define (nth-col lsts n)
             (foldr (lambda (row rror)
                      (cons (list-ref row n) rror)) ;; build list by consing each row's nth number
                    empty lsts))]

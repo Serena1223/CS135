@@ -9,7 +9,7 @@
 ;; ***************************************************
 
 ;; Part A
-;; multi-apply takes in a list of functions and a value. Apply these functions from left
+;; (multi-apply lof val) takes in a list of functions and a value. Apply these functions from left
 ;; to right on the value
 
 ;; Examples:
@@ -29,7 +29,7 @@
 
 
 ;; Part B
-;; aop takes in a natural number n and produces a function that takes in x, that follows
+;; (aop n) takes in a natural number n and produces a function that takes in x, that follows
 ;; the pattern (x^n + x^ (n-1) + ... (x^0). 
 
 ;; Examples:
@@ -46,23 +46,21 @@
 ;; Tests:
 (check-expect ((aop 4) 2) 31)
 (check-expect ((aop 0) 3) 1)
-(check-expect ((aop -1) 10) 0)
 
 
 ;; Part C
-;; multi-compose takes a list of functions and returns the combined function from the list
+;; (multi-compose lof) takes a list of functions and returns the combined function from the list
 ;; of functions
 
 ;; Examples:
 (check-expect ((multi-compose (list add1 add1)) 6) 8)
 (check-expect ((multi-compose (list add1 sub1)) 7) 7)
-(check-expect ((multi-compose (list add1 sqr)) 9) 100)
 
 ;; multi-compose: (listof (X -> X)) -> (X -> X)
 
 (define (multi-compose lof)
   (lambda (val)
-    (foldl (lambda (func ele) (func ele)) val lof)))
+    (foldr (lambda (val rror) (val rror)) val lof)))
 
 ;; Tests:
 (check-expect ((multi-compose '()) 6) 6)

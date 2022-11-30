@@ -9,7 +9,7 @@
 ;; ***************************************************
 
 ;; Part A
-;; alphanumeric-only takes in a list of strings and only keeps the elements with
+;; (alphanumeric-only lst) takes in a list of strings and only keeps the elements with
 ;; alphanumerics only
 
 ;; Examples:
@@ -21,6 +21,7 @@
 
 (define (alphanumeric-only lst)
   (filter
+   ;; 
    (lambda (str)
      (foldl (lambda (c rror) (and (or (char-alphabetic? c)
                                       (char-numeric? c))
@@ -38,7 +39,7 @@
 
 
 ;; Part B
-;; remove-outliers removes the outliers (defined as any element more than 1 Standard Deviation
+;; (remove-outliers lst) removes the outliers (defined as any element more than 1 Standard Deviation
 ;; more or less than the mean) in a list of numbers
 
 ;; Examples:
@@ -50,10 +51,15 @@
 (define (remove-outliers lst)
   (local [(define n (foldr (lambda (x y)
                              (add1 y)) 0 lst))
+
+          ;; (find-mean) finds the mean in a list of numbers
+          ;; find-mean: (listof Num) -> Num
           (define (find-mean lst)
             (/ (foldr + 0 lst) n))
           (define mean (find-mean lst))
-          
+
+          ;; (find-SD) finds the standard deviation in a list of numbers
+          ;; find-SD: (listof Num) -> Num
           (define (find-SD lst)
             (sqrt (/ (foldr (lambda (x rror)
                                    (+ (sqr (- x mean)) rror)) 0 lst) n)))
@@ -70,7 +76,7 @@
 (check-expect (remove-outliers '(0 999 -999)) '(0))
 
 ;; Part C
-;; zero-fill takes in a string and adds 0s to its tail until the string is 20 characters long
+;; (zero-fill str) takes in a string and adds 0s to its tail until the string is 20 characters long
 
 ;; Examples
 (check-expect (zero-fill "financebro") "financebro0000000000")
@@ -92,7 +98,7 @@
 
 
 ;; Part D
-;; remove-duplicates takes in a list and only keeps the first instance of each element's
+;; (remove-duplicates lon) takes in a list and only keeps the first instance of each element's
 ;; occurence and discards repeated occurances thereafter
 
 ;; Examples:
@@ -102,8 +108,16 @@
 
 ;; remove-duplicates: (listof Num) -> (listof Num)
 
-
+(define (remove-duplicates lon)
+    (foldr (lambda (x rror)
+               (local [;; (new?) determines if an element is new in the list
+                       ;; new?: Num -> Bool
+                       (define (new? ele) (not (= ele x)))]
+                 (cons x (filter new? rror)))) empty lon))
+  
 ;; Tests:
+(check-expect (remove-duplicates (list 0 1 2 2 3 4 4)) (list 0 1 2 3 4))
+(check-expect (remove-duplicates (list -3 3 -3 -3)) (list -3 3))
 
 
 
