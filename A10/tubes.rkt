@@ -254,13 +254,17 @@
 
 
 ;; Part H
-;; (next-games gm)
+;; (next-games gm) takes in a game and outputs a list of games that are possible by making
+;; the next move in the game
+
 (define (test-next-games gm expected) (all-equiv? (next-games gm) expected))
 (define (next-games gm) empty)
 (define 3-by-3 (make-game 3 3
                           (list '(a b a)
                                 '(a b b)
                                 '())))
+
+;; next-games: Game -> (listof Game)
 
 
 ;; Examples:
