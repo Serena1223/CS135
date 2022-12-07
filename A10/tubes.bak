@@ -1,0 +1,126 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname tubes) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+(define-struct game (tubesize maxcolours tubes))
+
+(define game1-start
+  (make-game 2 5
+             (list (list 'blue 'blue)
+                   (list 'blue 'red))))
+
+(define game1-next
+  (make-game 2 2
+             (list (list 'blue 'red))))
+
+(define game2-start
+  (make-game 4 4
+             (list (list 'blue 'blue 'blue 'blue)
+                   (list 'red 'red 'red 'red))))
+
+(define game2-next
+  (make-game 4 0 '()))
+
+(define finished-game
+  (make-game 2 5
+             (list (list 'blue 'blue)
+                   (list 'red 'red))))
+
+(define wrong-game
+  (make-game 1 1 (list (list 'blue 'blue)
+                   (list 'red 'red))))
+
+;; Part A
+;; (check-colour? size num los)
+
+;; Examples:
+(check-expect (check-colour? 2 5 empty) true)
+(check-expect (check-colour? 9 0 empty) true)
+(check-expect (check-colour? 1 1 '(bye hi)) false)
+
+;; Part B
+;; (valid-game? gm) evaluates if a Game is valid by checking if it satisifed all conditions such as maximum
+;; tube size and maximum colours. (Might be a bit vague right now)
+
+;; Examples:
+(check-expect (valid-game? game2-next) true)
+(check-expect (valid-game? game2-start) true)
+(check-expect (valid-game? wrong-game) false)
+
+;; valid-game?: Game -> Bool
+
+
+;; Part C
+;; (remove-completed gm)
+
+;; Examples:
+(check-expect (remove-completed game2-start) game2-next)
+(check-expect (remove-completed game2-next) game2-next)
+
+
+
+;; remove-completed: Game -> Game
+
+;; Part D
+;; (finished-game? gm)
+;; Examples:
+(check-expect (finished-game? game2-next) true)
+(check-expect (finished-game? finished-game) true)
+
+
+;; finished-game?: Game -> Bool
+
+;; Part E
+;; (num-blocks llos) consumes a list of symbols and find the total number of blocks in the llos.
+;; Examples:
+(check-expect (num-blocks (list
+                           '(a a b a a)
+                           '(b a a a a))) 5)
+
+(check-expect (num-blocks (list
+                           '(a a a)
+                           '(b a a))) 3)
+
+;; num-blocks: (listof Sym) -> Nat
+
+
+;; Part F
+;; (equiv-game? gm1 gm2) evaluates if gm1 (game 1) and gm2 (game 2) are equivalent.
+
+;; Examples:
+(check-expect (equiv-game? game1-start game1-next) false)
+(check-expect (equiv-game? game1-start game1-start) true)
+
+
+;; equiv-game?: Game Game -> Bool
+
+;; Part G
+;; (all-equiv?  log1 log2)
+;; Examples:
+(check-expect (all-equiv? (list game2-start game2-next)
+                          (list game2-next game2-start)) true)
+
+(check-expect (all-equiv? (list game2-next game2-next)
+                          (list game2-next game2-start)) false)
+
+
+
+;; Part H
+;; (next-games gm)
+(define (test-next-games gm expected) (all-equiv? (next-games gm) expected))
+(define 3-by-3 (make-game 3 3
+                          (list '(a b a)
+                                '(a b b)
+                                '())))
+
+
+;; Examples:
+(check-expect (test-next-games 3-by-3 (list (make-game 3 3
+                               (list '(a b a)
+                                     '(a b)
+                                     '(b)))
+                    (make-game 3 3
+                               (list '(a b a)
+                                     '(a b)
+                                     '(b)))) true)
+;; next-games: Game -> (listof Games)
+               
