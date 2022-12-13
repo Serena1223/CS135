@@ -29,6 +29,7 @@
 ;; * OpNode
 
 ;; try making the function eval: evaluating a make-opnode
+;; note this is mutual recursion as well. 
 (define (eval exp)
   (cond
     [(number? exp) exp]
@@ -71,10 +72,44 @@
 (check-expect (eval2 '(+ (* 4 2) 3 (+ 5 1 2) 2)) 21)
 
 ;; Other uses for general trees
+
+;; Example 1
 (define-struct gnode (key children))
 ;; a GT (general tree) is a (make-gnode Nat (listof GT))
 
+(define one-gt (make-gnode 78 (list
+                               (make-gnode 81 empty)
+                               (make-gnode 66 empty)
+                               (make-gnode 48
+                                           (make-gnode 37 empty empty)
+                                           (make-gnode 12 empty empty))
+                               (make-gnode 11 empty))))
 
+(define (reverse-gt gt)
+  (cond
+    [(empty? gt) empty]
+    [(node? gt) (make-gnode (gnode-key gn)
+                            (reverse gnode-children))]))
+
+(define (reverse lst)
+  (cond
+    [(empty? lst) empty]
+    [(empty? (gnode-children (first lst)))
+     (append (reverse (rest lst)) (first lst))]
+    ;; trying to reverse the nested things in that list
+    [else reverse ( ]
+
+;; reverse-gt: GT -> GT
+;; read it a little bit
+(define (reverse-gt gt)
+  (cond [(empty? (gnode-children gt)) gt]
+        [else (make-gnode (gnode-key gt)
+                          (local [(define (reverse-children/acc c acc)
+                                    (cond [(empty? c) acc]
+                                          [else (reverse-children/acc (rest c)
+                                                                      (cons (reverse-gt (first c)) acc))]))]
+                            (reverse-children/acc (gnode-children gt) empty)))]))
+;; DO THIS AGAIN ON UR OWN
 
 
 

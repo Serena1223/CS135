@@ -26,5 +26,34 @@
 
 ;; There is a lot more to go
 
+;; Ex. 3 you only get 1 local helper with 1 parameter. Func produces a list containing
+;; squares of the first n natural numbers
+
+(define (list-sqrs upper)
+  (local [(define (count i)
+            (cond
+              [(<= i upper) (cons (sqr i) (count (add1 i)))]
+              [else empty]))]
+    (count 0)))
+
+(list-sqrs 8)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
