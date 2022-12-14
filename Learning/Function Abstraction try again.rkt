@@ -102,9 +102,125 @@
 (check-expect (total-lengthv2 '((1 2 3) (4 5) (1 1 1))) 8)
 
 
-;; Example 8: foldr to produce mean of a list of num
-(define (average lon)
-  (foldr f 0 lon))
+;; Example 7:
+;; total-length of elements in a list
+;; version 1: using length
+
+(define (total-lengthv1 lst)
+  (cond
+    [(empty? lst) 0]
+    [(cons? (first lst)) (+ (length (first lst)) (total-lengthv1 (rest lst)))]))
+
+(check-expect (total-lengthv1 '((1 2 3) (4 5) (1 1 1))) 8)
+
+(define (total-lengthv2 lst)
+  (foldr (lambda (item rror) (+ (length item) rror)) 0 lst))
+
+(check-expect (total-lengthv2 '((1 2 3) (4 5) (1 1 1))) 8)
+
+;; took a break. back in waterloo now
+
+;; Example 8 - mean of non-empty (listof Num)
+(define (average lst)
+  (/ (foldr (lambda (item rror) (+ item rror)) 0 lst) (length lst)))
+(check-expect (average '(2 4 9)) 5)
+
+
+;; Example 9 - times-square
+(define (times-square lon)
+  ;; produce a list of perf squares using filter
+  (foldr * 1 (filter (lambda (item) (integer? (sqrt item))) lon)))
+  
+(check-expect (times-square '(1 25 5 4 1 17)) 100)
+
+;; Using CONS with foldr
+;; negate list using foldr
+(lambda (x rror) (cons (- x) rror))
+
+;; becomes
+(define (negatelist lst)
+  (foldr (lambda (x rror) (cons (- x) rror)) empty lst))
+
+;; my map using foldr
+(define (foldr-map func lst)
+  (foldr (lambda (x rror) (cons (func x) rror)) empty lst))
+
+;; my filter using foldr
+(define (foldr-filter func lst)
+  (foldr append empty (lambda (x rror) (func x))))
+
+;; Example 10 - double each
+(define (double-each lst)
+  (foldr (lambda (x rror) (cons (* 2 x) rror)) empty lst))
+
+(check-expect (double-each '(3 5 9)) '(6 10 18))
+
+;; Example 11 - kee-evens list
+
+(define (keep-evens lst)
+  ;; the function will
+  ;; it'll be (foldr f b lst) and the f is going to do the filter stuff
+  (foldr (lambda (item filtered) (cond
+                                   [(even? item) (cons item filtered)]
+                                   [else filtered])) empty lst))
+(check-expect (keep-evens '(2 3 4 5 6 9)) '(2 4 6))
+
+
+;; Example 12 - sum even
+;; first version
+(define (sum-even1 loi)
+  (foldr cons empty (filter even? loi)))
+
+(check-expect (sum-even1 '(2 3 5 6 7 8)) '(2 6 8))
+
+;; second version - lambda instead of even
+(define (sum-even2 loi)
+  (foldr cons empty (filter (lambda (item) (= 0 (remainder item 2))) loi)))
+
+(check-expect (sum-even2 '(2 3 5 6 7 8)) '(2 6 8))
+
+;; third version - foldr, lambda, even? but no filter
+(define (sum-even3 loi)
+  (foldr (lambda (x filtered) (cond
+                                [(even? x) (cons x filtered)]
+                                [else filtered])) empty loi))
+
+(check-expect (sum-even3 '(2 3 5 6 7 8)) '(2 6 8))
+
+;; Example 13 - TIME TO DEBUG THIS
+(define (multiple-each lst n)
+  (map (lambda (item) (* item n)) lst))
+
+(check-expect (multiple-each '(1 3 3 4) 2) '(2 6 6 8))
+
+;; Example 14 - add-total
+(define (add-total lst)
+  (map (lambda (item) (+ item (foldr + 0 lst))) lst))
+
+(check-expect (add-total (list 1 9 1 -1)) (list 11 19 11 9))
+
+;; Example 15 - (discord-bad)
+(define (discard-bad lst lo hi)
+  (filter (lambda (item) (and (<= lo item) (>= hi item))) lst))
+
+(check-expect (discard-bad '(12 5 20 2 10 22) 10 20) '(12 20 10))
+
+
+;; Example 16 - squash-bad
+(define (squash-bad lo hi lst)
+  (map (lambda (item) (cond
+                        [(< item lo) lo ]
+                        [(> item hi) hi]
+                        [else item])) lst))
+
+(check-expect (squash-bad 10 20 '(12 5 20 2 10 22)) '(12 10 20 10 10 20))
+
+;; Example 17 - above-average
+(define (above-average lon)
+  (filter (lambda (item)(< (/ (foldr + 0 lon) (length lon)) item)) lon))
+
+(above-average (list -10 2 9 1 20 19))
+ 
 
 
 
